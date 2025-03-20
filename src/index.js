@@ -1,7 +1,14 @@
-import express from "express";
+import app from "../app.js";
+import { config } from "./config/serverConfig.js";
 
-const app = express();
-
-app.get("/ping", (req, res) => {
-  res.status(200).json({ message: "pong" });
-});
+const PORT = config.port;
+const startServer = async () => {
+  try {
+    app.listen(PORT, () => {
+      console.log(`Server is running on ${config.fullUrl}`);
+    });
+  } catch (error) {
+    console.error("Error starting server:", error);
+  }
+};
+startServer();
