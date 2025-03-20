@@ -3,12 +3,14 @@ dotenv.config()
 
 class ServerConfig {
   constructor() {
-    this.port = process.env.PORT || 3000
-    this.host = process.env.HOST || 'localhost'
-    this.protocol = process.env.PROTOCOL || 'http'
-    this.basePath = process.env.BASE_PATH || '/'
-    this.apiVersion = process.env.API_VERSION || 'v1'
+    this.port = process.env.PORT
+    this.host = process.env.HOST
+    this.protocol = process.env.PROTOCOL
+    this.basePath = process.env.BASE_PATH
+    this.apiVersion = process.env.API_VERSION
     this.apiPrefix = `${this.basePath}${this.apiVersion}`
+    this.nodeEnv = process.env.NODE_ENV
+    this.dbUri = process.env.DB_URI
     this.validate()
   }
 
