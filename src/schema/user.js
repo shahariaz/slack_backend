@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: {true, 'Email is required'},
+      required: [true, 'Email is required'],
       unique: [true, 'Email Must be unique'],
       trim: true,
       lowercase: true,
@@ -15,13 +15,13 @@ const userSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid email!`
       }
     },
-    password:{
+    password: {
       type: String,
       required: [true, 'Password is required'],
       minlength: [8, 'Password must be at least 8 characters long'],
       select: false
     },
-    username:{
+    username: {
       type: String,
       required: [true, 'Username is required'],
       unique: [true, 'Username must be unique'],
@@ -33,21 +33,24 @@ const userSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid username!`
       }
     },
-    avatar:{
-      type:String
+    avatar: {
+      type: String
     }
   },
   { timestamps: true }
 )
 
-userSchema.pre('save', async function(next) {
-  const user = this;
+userSchema.pre('save', async function (next) {
+  const user = this
   // Only set default avatar if no avatar is provided or username is modified
-  if ((!user.avatar || this.isModified('username')) && !this.isModified('avatar')) {
-    user.avatar = `https://robohash.org/${user.username}?set=set4&size=400x400`;
+  if (
+    (!user.avatar || this.isModified('username')) &&
+    !this.isModified('avatar')
+  ) {
+    user.avatar = `https://robohash.org/${user.username}?set=set4&size=400x400`
   }
-  next();
-});
+  next()
+})
 
 const User = mongoose.model('User', userSchema)
 export default User
