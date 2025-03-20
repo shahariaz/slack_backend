@@ -1,30 +1,30 @@
 export default function curdRepository(schema) {
   return {
     model: schema,
-    create: async (data) => {
+    create: async function (data) {
       const newDoc = await this.model.create(data)
       return newDoc
     },
-    getAll: async () => {
+    getAll: async function () {
       const allDocs = await this.model.find()
       return allDocs
     },
-    getById: async (id) => {
+    getById: async function (id) {
       const doc = await this.model.findById(id)
       return doc
     },
-    delete: async (id) => {
+    delete: async function (id) {
       const deletedDoc = await this.model.findByIdAndDelete(id)
       return deletedDoc
     },
-    update: async (id, data) => {
+    update: async function (id, data) {
       const updatedDoc = await this.model.findByIdAndUpdate(id, data, {
         new: true,
         runValidators: true
       })
       return updatedDoc
     },
-    getWithPagination: async (query) => {
+    getWithPagination: async function (query) {
       const { page = 1, limit = 10 } = query
       const skip = (page - 1) * limit
       const docs = await this.model.find().skip(skip).limit(limit)
